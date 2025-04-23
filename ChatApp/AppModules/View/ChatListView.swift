@@ -10,41 +10,58 @@ struct ChatListView: View {
     @StateObject private var viewModel = ChatViewModel()
 
     var body: some View {
-        VStack {
-            List(viewModel.messages) { message in
-                HStack {
-                    if message.sender == "You" {
-                        Spacer()
-                        Text(message.content)
-                            .padding()
-                            .background(Color.blue.opacity(0.3))
-                            .cornerRadius(10)
-                    } else {
-                        Text(message.content)
-                            .padding()
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(10)
-                        Spacer()
-                    }
+        ZStack {
+            Color("PrimaryBackground")
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                if viewModel.chats.isEmpty {
+                    Text("No chats available")
+                        .padding()
+                } else {
+                    Text("Chats")
+                        .customFont(size: 31, weight: .bold, color: Color("PrimaryFont"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    ScrollView {
+                        ForEach(viewModel.chats, id: \.self) { chat in
+                            NavigationLink(destination: ChatDetailView(chat: chat)) {
+                                HStack {
+                                    VStack {
+                                        Text(chat.botName)
+                                            .customFont(size: 15, weight: .bold, color: Color("PrimaryFont"))
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Spacer()
+                                        Text(chat.latestMessage)
+                                            .foregroundColor(.gray)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        Divider()
+                                            .frame(height: 2)
+                                            .frame(maxWidth: .infinity)
+                                            .background(Color("Divider"))
+                                    }
+                                    
+                                    Image(systemName: "arrow.right")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(Color("PrimaryIcon"))
+                                }
+                                .frame(height: 50)
+                                .padding(.vertical, 5)
+                            }
+                        }
+                    }.padding(.horizontal)
+                    
                 }
             }
-            .listStyle(PlainListStyle())
-
-            HStack {
-                TextField("Type a message", text: $viewModel.inputText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Button("Send") {
-                    viewModel.sendMessage()
-                }
+            .onAppear {
+                viewModel.connectWebSocket()
             }
-            .padding()
-        }
-        .navigationTitle("ChatBot")
-        .alert(item: $viewModel.errorMessage) { alert in
-            Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
-        }
-        .onDisappear {
-            viewModel.disconnectWebSocket()
+            .alert(item: $viewModel.errorMessage) { alert in
+                Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
+            }
         }
     }
 }
