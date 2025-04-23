@@ -20,9 +20,11 @@ struct Chat: Identifiable, Hashable {
     let id = UUID()
     let botName: String
     var messages: [Message] = []
-    var isQueued: Bool = false
     var latestMessage: String {
         return messages.last?.content ?? "No messages yet"
+    }
+    var unreadCount: Int {
+        return messages.filter { !$0.isQueued }.count
     }
 }
 
