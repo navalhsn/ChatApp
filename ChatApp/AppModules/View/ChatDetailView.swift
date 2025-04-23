@@ -11,36 +11,43 @@ struct ChatDetailView: View {
     @StateObject private var viewModel = ChatViewModel()
 
     var body: some View {
-        VStack {
-            List(viewModel.messages) { message in
-                HStack {
-                    if message.sender == "You" {
-                        Spacer()
-                        Text(message.content)
-                            .padding()
-                            .background(Color.blue.opacity(0.3))
-                            .cornerRadius(10)
-                    } else {
-                        Text(message.content)
-                            .padding()
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(10)
-                        Spacer()
+        ZStack {
+            Color("PrimaryBackground")
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 0) {
+                ScrollView {
+                    ForEach(viewModel.messages, id: \.self) { message in
+                        HStack {
+                            if message.sender == "You" {
+                                Spacer()
+                                Text(message.content)
+                                    .customFont(size: 15, weight: .bold, color: Color("PrimaryFont"))
+                                    .padding()
+                                    .background(Color.blue.opacity(0.3))
+                                    .cornerRadius(10)
+                            } else {
+                                Text(message.content)
+                                    .customFont(size: 15, weight: .bold, color: Color("PrimaryFont"))
+                                    .padding()
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(10)
+                                Spacer()
+                            }
+                        }
                     }
                 }
-            }
-            .listStyle(PlainListStyle())
-
-            HStack {
-                TextField("Type a message", text: $viewModel.inputText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Button("Send") {
-                    viewModel.sendMessage()
+                
+                HStack {
+                    TextField("Type a message", text: $viewModel.inputText)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Button("Send") {
+                        viewModel.sendMessage()
+                    }
                 }
-            }
-            .padding()
+                .padding()
+            }            
         }
-        .navigationTitle("ChatBot")
         .onAppear {
             // Reload the messages when the detail view appears
             viewModel.checkNetworkConnection()

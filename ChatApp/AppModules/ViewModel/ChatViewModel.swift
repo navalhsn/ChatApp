@@ -17,7 +17,7 @@ class ChatViewModel: ObservableObject {
     private var webSocketTask: URLSessionWebSocketTask?
     private var cancellables = Set<AnyCancellable>()
     private let offlineQueueManager = OfflineMessageQueueManager()
-    private let webSocketURL = URL(string: "wss://s14506.blr1.piesocket.com/v3/1?api_key=h1N726iAoJmOdESuurZiEiQ0Ydt6VRY9bU44nRE2&notify_self=1")!
+    private let webSocketManager = WebSocketManager()
     
     init() {
         // Dummy data initialization for chats
@@ -43,7 +43,7 @@ class ChatViewModel: ObservableObject {
     
     func connectWebSocket() {
         let session = URLSession(configuration: .default)
-        webSocketTask = session.webSocketTask(with: webSocketURL)
+        webSocketTask = session.webSocketTask(with: webSocketManager.webSocketURL)
         webSocketTask?.resume()
         isConnected = true
         receiveMessage()

@@ -8,7 +8,8 @@ import SwiftUI
 
 struct ChatListView: View {
     @StateObject private var viewModel = ChatViewModel()
-
+    private let webSocketManager = WebSocketManager()
+    
     var body: some View {
         ZStack {
             Color("PrimaryBackground")
@@ -28,25 +29,27 @@ struct ChatListView: View {
                     ScrollView {
                         ForEach(viewModel.chats, id: \.self) { chat in
                             NavigationLink(destination: ChatDetailView(chat: chat)) {
-                                HStack {
-                                    VStack {
-                                        Text(chat.botName)
-                                            .customFont(size: 15, weight: .bold, color: Color("PrimaryFont"))
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        Spacer()
-                                        Text(chat.latestMessage)
-                                            .foregroundColor(.gray)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                VStack {
+                                    HStack {
+                                        VStack {
+                                            Text(chat.botName)
+                                                .customFont(size: 15, weight: .bold, color: Color("PrimaryFont"))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            Spacer()
+                                            Text(chat.latestMessage)
+                                                .foregroundColor(.gray)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                        }
                                         
-                                        Divider()
-                                            .frame(height: 2)
-                                            .frame(maxWidth: .infinity)
-                                            .background(Color("Divider"))
+                                        Image(systemName: "arrow.right")
+                                            .font(.system(size: 24))
+                                            .foregroundColor(Color("PrimaryIcon"))
                                     }
                                     
-                                    Image(systemName: "arrow.right")
-                                        .font(.system(size: 24))
-                                        .foregroundColor(Color("PrimaryIcon"))
+                                    Divider()
+                                        .frame(height: 2)
+                                        .frame(maxWidth: .infinity)
+                                        .background(Color("Divider"))
                                 }
                                 .frame(height: 50)
                                 .padding(.vertical, 5)
@@ -55,9 +58,6 @@ struct ChatListView: View {
                     }.padding(.horizontal)
                     
                 }
-            }
-            .onAppear {
-                viewModel.connectWebSocket()
             }
             .alert(item: $viewModel.errorMessage) { alert in
                 Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
