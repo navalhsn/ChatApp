@@ -33,6 +33,7 @@ struct ChatDetailView: View {
                 
                 MessageBoxView(sendButtonAction: {
                     viewModel.webSocketManager.sendMessage(inputText: viewModel.inputText)
+                    viewModel.inputText = ""
                 }, sendMessage: $viewModel.inputText)
                 .padding()
             }
