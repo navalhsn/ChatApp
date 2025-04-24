@@ -14,11 +14,19 @@
 			remoteGlobalIDString = 18DB0A9D2DB90099004FBCB7;
 			remoteInfo = ChatApp;
 		};
+		18DB0B302DBA2FBB004FBCB7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18DB0A962DB90099004FBCB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18DB0A9D2DB90099004FBCB7;
+			remoteInfo = ChatApp;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		18DB0A9E2DB90099004FBCB7 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18DB0B142DBA2B4D004FBCB7 /* ChatAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		18DB0B2A2DBA2FBB004FBCB7 /* ChatAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -30,6 +38,11 @@
 		18DB0B152DBA2B4D004FBCB7 /* ChatAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ChatAppTests;
+			sourceTree = "<group>";
+		};
+		18DB0B2B2DBA2FBB004FBCB7 /* ChatAppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChatAppUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -49,6 +62,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		18DB0B272DBA2FBB004FBCB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -57,6 +77,7 @@
 			children = (
 				18DB0AA02DB90099004FBCB7 /* ChatApp */,
 				18DB0B152DBA2B4D004FBCB7 /* ChatAppTests */,
+				18DB0B2B2DBA2FBB004FBCB7 /* ChatAppUITests */,
 				18DB0A9F2DB90099004FBCB7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,6 +87,7 @@
 			children = (
 				18DB0A9E2DB90099004FBCB7 /* ChatApp.app */,
 				18DB0B142DBA2B4D004FBCB7 /* ChatAppTests.xctest */,
+				18DB0B2A2DBA2FBB004FBCB7 /* ChatAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,6 +140,29 @@
 			productReference = 18DB0B142DBA2B4D004FBCB7 /* ChatAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		18DB0B292DBA2FBB004FBCB7 /* ChatAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18DB0B322DBA2FBB004FBCB7 /* Build configuration list for PBXNativeTarget "ChatAppUITests" */;
+			buildPhases = (
+				18DB0B262DBA2FBB004FBCB7 /* Sources */,
+				18DB0B272DBA2FBB004FBCB7 /* Frameworks */,
+				18DB0B282DBA2FBB004FBCB7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				18DB0B312DBA2FBB004FBCB7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				18DB0B2B2DBA2FBB004FBCB7 /* ChatAppUITests */,
+			);
+			name = ChatAppUITests;
+			packageProductDependencies = (
+			);
+			productName = ChatAppUITests;
+			productReference = 18DB0B2A2DBA2FBB004FBCB7 /* ChatAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -132,6 +177,10 @@
 						CreatedOnToolsVersion = 16.2;
 					};
 					18DB0B132DBA2B4D004FBCB7 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 18DB0A9D2DB90099004FBCB7;
+					};
+					18DB0B292DBA2FBB004FBCB7 = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 18DB0A9D2DB90099004FBCB7;
 					};
@@ -153,6 +202,7 @@
 			targets = (
 				18DB0A9D2DB90099004FBCB7 /* ChatApp */,
 				18DB0B132DBA2B4D004FBCB7 /* ChatAppTests */,
+				18DB0B292DBA2FBB004FBCB7 /* ChatAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -166,6 +216,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		18DB0B122DBA2B4D004FBCB7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18DB0B282DBA2FBB004FBCB7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -189,6 +246,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		18DB0B262DBA2FBB004FBCB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -196,6 +260,11 @@
 			isa = PBXTargetDependency;
 			target = 18DB0A9D2DB90099004FBCB7 /* ChatApp */;
 			targetProxy = 18DB0B182DBA2B4D004FBCB7 /* PBXContainerItemProxy */;
+		};
+		18DB0B312DBA2FBB004FBCB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18DB0A9D2DB90099004FBCB7 /* ChatApp */;
+			targetProxy = 18DB0B302DBA2FBB004FBCB7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -415,6 +484,40 @@
 			};
 			name = Release;
 		};
+		18DB0B332DBA2FBB004FBCB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R2Q2A382W5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testAssignment.ChatAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatApp;
+			};
+			name = Debug;
+		};
+		18DB0B342DBA2FBB004FBCB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R2Q2A382W5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testAssignment.ChatAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatApp;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -441,6 +544,15 @@
 			buildConfigurations = (
 				18DB0B1B2DBA2B4D004FBCB7 /* Debug */,
 				18DB0B1C2DBA2B4D004FBCB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18DB0B322DBA2FBB004FBCB7 /* Build configuration list for PBXNativeTarget "ChatAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18DB0B332DBA2FBB004FBCB7 /* Debug */,
+				18DB0B342DBA2FBB004FBCB7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
