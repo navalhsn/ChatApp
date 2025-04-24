@@ -15,36 +15,33 @@ class ChatViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        // Dummy data initialization for chats
-        let dummyChats = [
-            Chat(botName: "SupportBot", messages: [
-                Message(sender: "You", content: "Hi, I need help with my order."),
-                Message(sender: "Bot", content: "Sure! What seems to be the issue?")
-            ]),
-            Chat(botName: "SalesBot", messages: [
-                Message(sender: "You", content: "I'd like to know more about your products."),
-                Message(sender: "Bot", content: "We offer a range of products. What are you looking for?")
-            ]),
-            Chat(botName: "FAQBot", messages: [
-                Message(sender: "You", content: "How can I reset my password?"),
-                Message(sender: "Bot", content: "You can reset your password through the settings page.")
-            ])
-        ]
-        
-        self.chats = dummyChats
-        
-        let sampleMessages = [
-            Message(sender: "You", content: "Hello!"),
-            Message(sender: "Bot", content: "Hi there! How can I assist you?")
-        ]
-        messages = sampleMessages
-        
         webSocketManager.connectWebSocket()
+        setupInitialData() // Move initial data setup to init
         
+        // Only add new messages from the WebSocket
         webSocketManager.$messages
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] updatedMessages in
-                        self?.messages = updatedMessages
-                    }.store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] updatedMessages in
+                guard let self = self else { return }
+                
+                // Only add messages that aren't already in the array
+                for message in updatedMessages {
+                    if !self.messages.contains(where: { $0.id == message.id }) {
+                        self.messages.append(message)
+                    }
+                }
+            }.store(in: &cancellables)
+    }
+    
+    func setupInitialData() {
+        if let chat = ChatManager.shared.currentChat {
+            // Clear existing messages and add preset ones
+            messages = chat.messages
+            
+            // Also update the WebSocket manager's messages to include these preset messages
+            webSocketManager.messages = chat.messages
+            
+            print("chat from vm: ", messages)
+        }
     }
 }
