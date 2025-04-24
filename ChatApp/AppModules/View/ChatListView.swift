@@ -59,7 +59,7 @@ struct ChatListView: View {
                     
                 }
             }
-            .alert(item: $viewModel.errorMessage) { alert in
+            .alert(item: Binding(get: { webSocketManager.errorMessage }, set: { webSocketManager.errorMessage = $0 })) { alert in
                 Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
             }
         }
