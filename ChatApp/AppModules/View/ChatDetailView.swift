@@ -41,12 +41,7 @@ struct ChatDetailView: View {
         .onAppear {
             viewModel.setupInitialData()
         }
-        .alert(isPresented: Binding(get: { viewModel.webSocketManager.noConnection }, set: { viewModel.webSocketManager.noConnection = $0 })) {
-            Alert(title: Text("No Internet Connection"), message: Text("Please check your network connection."), dismissButton: .default(Text("OK")))
-        }
-        .alert(item: Binding(get: { viewModel.webSocketManager.errorMessage }, set: { viewModel.webSocketManager.errorMessage = $0 })) { alert in
-            Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
-        }
+        .withWebSocketAlerts(viewModel.webSocketManager)
         .onDisappear {
             viewModel.webSocketManager.disconnectWebSocket()
         }

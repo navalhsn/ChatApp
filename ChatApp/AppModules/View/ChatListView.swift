@@ -63,9 +63,7 @@ struct ChatListView: View {
                     
                 }
             }
-            .alert(isPresented: Binding(get: { webSocketManager.noConnection }, set: { webSocketManager.noConnection = $0 })) {
-                Alert(title: Text("No Internet Connection"), message: Text("Please check your network connection."), dismissButton: .default(Text("OK")))
-            }
+            .withWebSocketAlerts(webSocketManager)
             .navigationDestination(isPresented: $shouldNavigate) {
                 ChatDetailView()
             }
