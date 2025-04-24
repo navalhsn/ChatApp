@@ -21,7 +21,7 @@ struct ChatListView: View {
                         .padding()
                 } else {
                     Text("Chats")
-                        .customFont(size: 31, weight: .bold, color: Color("PrimaryFont"))
+                        .customFont(size: 31, weight: .bold, color: Color("TextSecondary"))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top)
                         .padding(.horizontal)
@@ -33,7 +33,7 @@ struct ChatListView: View {
                                     HStack {
                                         VStack {
                                             Text(chat.botName)
-                                                .customFont(size: 15, weight: .bold, color: Color("PrimaryFont"))
+                                                .customFont(size: 15, weight: .bold, color: Color("TextSecondary"))
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                             Spacer()
                                             Text(chat.latestMessage)
@@ -51,7 +51,7 @@ struct ChatListView: View {
                                         .frame(maxWidth: .infinity)
                                         .background(Color("Divider"))
                                 }
-                                .frame(height: 50)
+                                .frame(height: 55)
                                 .padding(.vertical, 5)
                             }
                         }

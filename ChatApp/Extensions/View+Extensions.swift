@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension View {
-    func customFont(size: CGFloat, weight: Font.Weight = .regular, color: Color = Color("FontColorDark")) -> some View {
+    func customFont(size: CGFloat, weight: Font.Weight = .regular, color: Color = Color("TextPrimary")) -> some View {
         self.font(.system(size: size, weight: weight))
             .foregroundColor(color)
     }

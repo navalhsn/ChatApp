@@ -33,6 +33,12 @@ class ChatViewModel: ObservableObject {
         
         self.chats = dummyChats
         
+        let sampleMessages = [
+            Message(sender: "You", content: "Hello!"),
+            Message(sender: "Bot", content: "Hi there! How can I assist you?")
+        ]
+        messages = sampleMessages
+        
         webSocketManager.connectWebSocket()
         
         webSocketManager.$messages
