@@ -7,7 +7,9 @@
 import SwiftUI
 
 struct ChatListView: View {
-    @StateObject private var viewModel = ChatViewModel()
+    @StateObject var viewModel = ChatViewModel()
+    @State var chat: Chat? = nil
+    @State var shouldNavigate: Bool = false
     private let webSocketManager = WebSocketManager()
     
     var body: some View {
@@ -28,7 +30,10 @@ struct ChatListView: View {
                     
                     ScrollView {
                         ForEach(viewModel.chats, id: \.self) { chat in
-                            NavigationLink(destination: ChatDetailView(chat: chat)) {
+                            Button(action: {
+                                self.chat = chat
+                                self.shouldNavigate = true
+                            }, label: {
                                 VStack {
                                     HStack {
                                         VStack {
@@ -51,9 +56,9 @@ struct ChatListView: View {
                                         .frame(maxWidth: .infinity)
                                         .background(Color("Divider"))
                                 }
-                                .frame(height: 55)
-                                .padding(.vertical, 5)
-                            }
+                            })
+                            .frame(height: 55)
+                            .padding(.vertical, 5)
                         }
                     }.padding(.horizontal)
                     
@@ -61,6 +66,11 @@ struct ChatListView: View {
             }
             .alert(item: Binding(get: { webSocketManager.errorMessage }, set: { webSocketManager.errorMessage = $0 })) { alert in
                 Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
+            }
+            .navigationDestination(isPresented: $shouldNavigate) {
+                if let chat = chat {
+                    ChatDetailView(chat: chat, viewModel: viewModel)
+                }
             }
         }
     }

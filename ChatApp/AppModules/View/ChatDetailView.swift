@@ -7,8 +7,8 @@
 import SwiftUI
 
 struct ChatDetailView: View {
-    @State var chat: Chat
-    @ObservedObject private var viewModel = ChatViewModel()
+    @State var chat: Chat?
+    @ObservedObject var viewModel: ChatViewModel
     
     var body: some View {
         ZStack {
@@ -16,7 +16,9 @@ struct ChatDetailView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 0) {
-                HeaderView(headText: chat.botName)
+                HeaderView(headText: chat?.botName ?? "Bot")
+                    .padding(.bottom)
+                
                 ScrollView {
                     ForEach(viewModel.messages, id: \.self) { message in
                         HStack {
@@ -54,7 +56,8 @@ struct ChatDetailView: View {
         Message(sender: "You", content: "Hello!"),
         Message(sender: "Bot", content: "Hi there! How can I assist you?")
     ]
-    
     let sampleChat = Chat(botName: "SupportBot", messages: sampleMessages)
-    return ChatDetailView(chat: sampleChat)
+    let sampleViewModel = ChatViewModel()
+    sampleViewModel.messages = sampleMessages
+    return ChatDetailView(chat: sampleChat, viewModel: sampleViewModel)
 }

@@ -13,7 +13,7 @@ struct UserChatBubbleView: View {
             Image("user_temp")
             
             Text(message)
-                .customFont(size: 15, weight: .medium)
+                .customFont(size: 15, weight: .medium, color: Color("TextSecondary"))
                 .padding(.vertical, 15)
             Spacer()
         }

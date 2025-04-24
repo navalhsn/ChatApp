@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct ChatAppApp: App {
+    @State private var path = NavigationPath()
     var body: some Scene {
         WindowGroup {
-            NavigationView {
+            NavigationStack(path: $path.animation(.linear(duration: 0))) {
                 ChatListView()
             }
         }

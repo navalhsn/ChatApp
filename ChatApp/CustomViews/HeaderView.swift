@@ -17,11 +17,14 @@ struct HeaderView: View {
                     dismiss()
                 }) {
                     Image("back_button")
+                        .resizable()
+                        .frame(width: 28, height: 28)
                 }
                 .padding(.leading, 24)
+                .padding(.trailing, 5)
             }
             
-            Text(headText).customFont(size: 19, weight: .semibold)
+            Text(headText).customFont(size: 19, weight: .semibold, color: Color("TextSecondary"))
             
             Spacer()
             

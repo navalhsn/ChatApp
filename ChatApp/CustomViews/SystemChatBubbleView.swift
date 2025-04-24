@@ -12,7 +12,7 @@ struct SystemChatBubbleView: View {
         HStack {
             Spacer()
             Text(message)
-                .customFont(size: 15, weight: .medium)
+                .customFont(size: 15, weight: .medium, color: Color("TextSecondary"))
                 .padding(.vertical, 15)
             
             Image("chatbot")
