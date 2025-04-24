@@ -11,8 +11,8 @@ class OfflineMessageQueueManager {
     static let shared = OfflineMessageQueueManager()
     private init() {}
     
-    private var queuedMessages: [Message] = []
-    private let queue = DispatchQueue(label: "OfflineMessageQueue")
+    var queuedMessages: [Message] = []
+    let queue = DispatchQueue(label: "OfflineMessageQueue")
 
     func addMessage(_ message: Message) {
         queue.async {
