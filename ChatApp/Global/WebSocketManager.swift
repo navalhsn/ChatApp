@@ -22,11 +22,11 @@ class WebSocketManager: ObservableObject {
         webSocketTask = session.webSocketTask(with: webSocketURL)
         webSocketTask?.resume()
         
-        // ✅ Confirm connection using a ping
+        //Confirm connection using a ping
         webSocketTask?.sendPing { [weak self] error in
             DispatchQueue.main.async {
                 if error == nil {
-                    self?.isConnected = true // ✅ Update only if connection is confirmed
+                    self?.isConnected = true
                 } else {
                     self?.isConnected = false
                     self?.errorMessage = IdentifiableAlert(message: "WebSocket failed to connect")
@@ -91,19 +91,17 @@ class WebSocketManager: ObservableObject {
         let newMessage = Message(sender: "You", content: inputText)
         messages.append(newMessage)
         
-        let message = URLSessionWebSocketTask.Message.string(inputText)
-        webSocketTask?.send(message) { [weak self] error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.errorMessage = IdentifiableAlert(message: "Failed to send message: \(error.localizedDescription)")
+        if isConnected {
+            let message = URLSessionWebSocketTask.Message.string(inputText)
+            webSocketTask?.send(message) { [weak self] error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self?.errorMessage = IdentifiableAlert(message: "Failed to send message: \(error.localizedDescription)")
+                    }
                 }
             }
-        }
-        
-        if isConnected {
-            sendMessageDirectly(newMessage)
         } else {
-            // Now actually using OfflineMessageQueueManager
+            // Add to offline queue
             offlineQueueManager.addMessage(newMessage)
         }
     }
