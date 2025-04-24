@@ -15,8 +15,39 @@ extension View {
 }
 
 // Alert
+//extension View {
+//    func withWebSocketAlerts(_ webSocketManager: WebSocketManager) -> some View {
+//        self.modifier(WebSocketAlertsViewModifier(webSocketManager: webSocketManager))
+//    }
+//}
 extension View {
-    func withWebSocketAlerts(_ webSocketManager: WebSocketManager) -> some View {
-        self.modifier(WebSocketAlertsViewModifier(webSocketManager: webSocketManager))
+    func withWebSocketAlerts(_ manager: WebSocketManager) -> some View {
+        self
+            .alert(isPresented: Binding(get: { !(manager.isConnected) }, set: { manager.isConnected = $0 })) {
+                Alert(
+                    title: Text("No Internet Connection"),
+                    message: Text("Please check your network connection."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .alert(item: Binding(get: { manager.errorMessage }, set: { manager.errorMessage = $0 })) { alert in
+                Alert(
+                    title: Text("Error"),
+                    message: Text(alert.message),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+    }
+    
+    func withOfflineAlert(_ manager: WebSocketManager) -> some View {
+        self
+            .alert(isPresented: Binding(get: { manager.showOfflineAlert }, set: { manager.showOfflineAlert = $0 })) {
+                Alert(
+                    title: Text("Text saved offline"),
+                    message: Text("Once connection is back, your text will be sent."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
     }
 }
+

@@ -15,6 +15,7 @@ struct ChatListView: View {
         ZStack {
             Color("PrimaryBackground")
                 .edgesIgnoringSafeArea(.all)
+                .allowsHitTesting(false)
             
             VStack {
                 if ChatManager.shared.chats.isEmpty {
@@ -63,11 +64,11 @@ struct ChatListView: View {
                     
                 }
             }
-            .withWebSocketAlerts(webSocketManager)
             .navigationDestination(isPresented: $shouldNavigate) {
                 ChatDetailView()
             }
         }
+        .withWebSocketAlerts(webSocketManager)
     }
 }
 

@@ -13,6 +13,7 @@ struct ChatDetailView: View {
         ZStack {
             Color("PrimaryBackground")
                 .edgesIgnoringSafeArea(.all)
+                .allowsHitTesting(false)
             
             VStack(spacing: 0) {
                 HeaderView(headText: ChatManager.shared.currentChat?.botName ?? "Bot")
@@ -41,10 +42,12 @@ struct ChatDetailView: View {
         .onAppear {
             viewModel.setupInitialData()
         }
-        .withWebSocketAlerts(viewModel.webSocketManager)
         .onDisappear {
             viewModel.webSocketManager.disconnectWebSocket()
         }
+        .withWebSocketAlerts(viewModel.webSocketManager)
+        .withOfflineAlert(viewModel.webSocketManager)
+        
     }
 }
 

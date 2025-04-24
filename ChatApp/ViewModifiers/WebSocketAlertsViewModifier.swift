@@ -11,7 +11,7 @@ struct WebSocketAlertsViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .alert(isPresented: Binding(get: { webSocketManager.noConnection }, set: { webSocketManager.noConnection = $0 })) {
+            .alert(isPresented: Binding(get: { !(webSocketManager.isConnected) }, set: { webSocketManager.isConnected = $0 })) {
                 Alert(title: Text("No Internet Connection"),
                       message: Text("Please check your network connection."),
                       dismissButton: .default(Text("OK")))

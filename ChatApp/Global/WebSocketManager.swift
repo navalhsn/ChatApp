@@ -10,9 +10,8 @@ import Foundation
 class WebSocketManager: ObservableObject {
     @Published var isConnected: Bool = false
     @Published var errorMessage: IdentifiableAlert?
-    @Published var noConnection: Bool = false
-    private let offlineQueueManager = OfflineMessageQueueManager()
     @Published var messages: [Message] = []
+    @Published var showOfflineAlert: Bool = false
     
     private var webSocketTask: URLSessionWebSocketTask?
     let webSocketURL = URL(string: "wss://s14506.blr1.piesocket.com/v3/1?api_key=h1N726iAoJmOdESuurZiEiQ0Ydt6VRY9bU44nRE2&notify_self=1")!
@@ -43,12 +42,8 @@ class WebSocketManager: ObservableObject {
     }
     
     func checkNetworkConnection() {
-        if !isConnected {
-            noConnection = true
-        } else {
-            noConnection = false
-            // Retry messages on reconnection
-            offlineQueueManager.retryMessagesIfConnected(isConnected: isConnected, sendMessage: sendMessageDirectly)
+        if isConnected {
+            OfflineMessageQueueManager.shared.retryMessagesIfConnected(isConnected: isConnected, sendMessage: sendMessageDirectly)
         }
     }
     
@@ -89,7 +84,6 @@ class WebSocketManager: ObservableObject {
         guard !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         
         let newMessage = Message(sender: "You", content: inputText)
-        messages.append(newMessage)
         
         if isConnected {
             let message = URLSessionWebSocketTask.Message.string(inputText)
@@ -98,11 +92,14 @@ class WebSocketManager: ObservableObject {
                     DispatchQueue.main.async {
                         self?.errorMessage = IdentifiableAlert(message: "Failed to send message: \(error.localizedDescription)")
                     }
+                } else {
+                    self?.messages.append(newMessage)
                 }
             }
         } else {
             // Add to offline queue
-            offlineQueueManager.addMessage(newMessage)
+            OfflineMessageQueueManager.shared.addMessage(newMessage)
+            showOfflineAlert = true
         }
     }
     

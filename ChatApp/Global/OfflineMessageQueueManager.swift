@@ -8,19 +8,30 @@
 import Foundation
 
 class OfflineMessageQueueManager {
+    static let shared = OfflineMessageQueueManager()
+    private init() {}
+    
     private var queuedMessages: [Message] = []
-    
+    private let queue = DispatchQueue(label: "OfflineMessageQueue")
+
     func addMessage(_ message: Message) {
-        queuedMessages.append(message)
-    }
-    
-    func retryMessagesIfConnected(isConnected: Bool, sendMessage: (Message) -> Void) {
-        guard isConnected else { return }
-        
-        for message in queuedMessages {
-            sendMessage(message)
+        queue.async {
+            self.queuedMessages.append(message)
         }
-        
-        queuedMessages.removeAll()
+    }
+
+    func retryMessagesIfConnected(isConnected: Bool, sendMessage: @escaping (Message) -> Void) {
+        queue.async {
+            guard isConnected else { return }
+
+            let messagesToSend = self.queuedMessages
+            self.queuedMessages.removeAll()
+
+            DispatchQueue.main.async {
+                for message in messagesToSend {
+                    sendMessage(message)
+                }
+            }
+        }
     }
 }
