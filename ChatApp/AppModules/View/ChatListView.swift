@@ -34,28 +34,7 @@ struct ChatListView: View {
                                 ChatManager.shared.currentChat = chat
                                 self.shouldNavigate = true
                             }, label: {
-                                VStack {
-                                    HStack {
-                                        VStack {
-                                            Text(chat.botName)
-                                                .customFont(size: 15, weight: .bold, color: Color("TextSecondary"))
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                            Spacer()
-                                            Text(chat.latestMessage)
-                                                .foregroundColor(.gray)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                        }
-                                        
-                                        Image(systemName: "arrow.right")
-                                            .font(.system(size: 24))
-                                            .foregroundColor(Color("PrimaryIcon"))
-                                    }
-                                    
-                                    Divider()
-                                        .frame(height: 2)
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color("Divider"))
-                                }
+                                ListCellView(botName: chat.botName, message: chat.latestMessage)
                             })
                             .frame(height: 55)
                             .padding(.vertical, 5)

@@ -15,11 +15,6 @@ extension View {
 }
 
 // Alert
-//extension View {
-//    func withWebSocketAlerts(_ webSocketManager: WebSocketManager) -> some View {
-//        self.modifier(WebSocketAlertsViewModifier(webSocketManager: webSocketManager))
-//    }
-//}
 extension View {
     func withWebSocketAlerts(_ manager: WebSocketManager) -> some View {
         self
